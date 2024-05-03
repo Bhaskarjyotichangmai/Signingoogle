@@ -5,8 +5,8 @@ phases:
       - cd google
       - echo Logging in to Amazon ECR...
       - aws --version
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 851725171252.dkr.ecr.us-east-1.amazonaws.com
-      - export REPOSITORY_URI=851725171252.dkr.ecr.us-east-1.amazonaws.com/iperk-dev-fcontainer
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 657158105478.dkr.ecr.us-east-1.amazonaws.com
+      - export REPOSITORY_URI=657158105478.dkr.ecr.us-east-1.amazonaws.com/google
       - export COMMIT_ID=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -b -8)
   build:
     commands:
