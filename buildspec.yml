@@ -1,27 +1,20 @@
 version: 0.2
-phases:
-  pre_build:
-    commands:
-      - cd google
-      - echo Logging in to Amazon ECR...
-      - aws --version
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 657158105478.dkr.ecr.us-east-1.amazonaws.com
-      - export REPOSITORY_URI=657158105478.dkr.ecr.us-east-1.amazonaws.com/google
-      - export COMMIT_ID=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -b -8)
-  build:
-    commands:
-      - echo Build started on `date`
-      - echo Building the Docker image...
-      - docker build --build-arg BACKEND_API_URL="$BACKEND_API_URL" -t $REPOSITORY_URI:$COMMIT_ID .
-  post_build:
-    commands:
-      - echo Build completed on `date`
-      - echo Pushing the Docker images...
-      - docker push $REPOSITORY_URI:$COMMIT_ID
-      - echo Writing image definitions file...
-      - echo $REPOSITORY_URI:$COMMIT_ID > imagename.txt
+
+phases: 
+    build:
+        commands:
+            - echo "Build block"
+            - ls
+            - echo "Running tests to check if "Congratulations" present in google file"
+            - grep "Congratulations" google
+    post_build:
+        commands:
+            - echo "Post build phase"
 artifacts:
     files:
-      - 'google/imagename.txt'
-      - '/scripts/**/*'
-      - '/appspec.yml'
+        - scripts/install_dependencies
+        - scripts/start_server
+        - scripts/stop_server
+        - google
+        - appspec.yml
+    discard-paths: yes
